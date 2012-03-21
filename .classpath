@@ -9,5 +9,7 @@
 	<classpathentry kind="lib" path="lib/minlog-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.18-bin.jar"/>
 	<classpathentry kind="lib" path="lib/reflectasm-1.01.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/mybatis-3.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -18,11 +18,14 @@
  */
 package net.k3rnel.arena.server.network;
 
-import net.k3rnel.arena.server.GameServer;
+import org.apache.ibatis.session.SqlSession;
+
+import net.k3rnel.arena.server.database.DataConnection;
+import net.k3rnel.arena.server.database.UserManager;
 import net.k3rnel.arena.server.feature.ChatManager;
 
 /**
- * Handles all networking
+ * Handles all networking. Database included. 
  * @author Nushio
  * @author shadowkanji
  */
@@ -87,21 +90,20 @@ public class NetworkService  {
         try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
+		    System.out.println("Could not load the MySQL JDBC Driver :( "); 
 			e.printStackTrace();
 		}
 		/*
 		 * Ensure anyone still marked as logged in on this server
 		 * is unmarked
 		 */
-		MySqlManager m = new MySqlManager();
-		if(m.connect(GameServer.getDatabaseHost(), 
-		        GameServer.getDatabaseName(), 
-				GameServer.getDatabaseUsername(),
-				GameServer.getDatabasePassword())) {
-			m.selectDatabase(GameServer.getDatabaseName());
-			m.close();
-		}
-		m = null;
+        SqlSession session = DataConnection.openSession();
+        try{
+            int released = new UserManager(session).release();
+		    System.out.println("Released "+released+" users");
+        }catch(Exception e){
+           System.out.println("Could not release users. Somethign is wrong :( "); 
+        }finally{session.close();}
 		/*
 		 * Start the login/logout managers
 		 */

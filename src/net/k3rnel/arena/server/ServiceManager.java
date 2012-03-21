@@ -18,7 +18,7 @@
  */
 package net.k3rnel.arena.server;
 
-import net.k3rnel.arena.server.network.DatabaseManager;
+import net.k3rnel.arena.server.database.DatabaseManager;
 import net.k3rnel.arena.server.network.IdleTimer;
 import net.k3rnel.arena.server.network.NetworkService;
 
@@ -52,7 +52,7 @@ public class ServiceManager {
 	public NetworkService getNetworkService() {
 		return m_networkService;
 	}
-	
+
 	/**
 	 * Starts all services
 	 */

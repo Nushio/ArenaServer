@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.k3rnel.arena.server.database.UserMapper">
+	<resultMap type="net.k3rnel.arena.server.database.User" id="UserMapper">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="lastLoginTime" jdbcType="LONG" property="lastLoginTime" />
+		<result column="lastLoginServer" jdbcType="VARCHAR" property="lastLoginServer" />
+		<result column="lastLoginIP" jdbcType="VARCHAR" property="lastLoginIP" />
+		<result column="muteban" jdbcType="INTEGER" property="muteban" />
+		<result column="adminLevel" jdbcType="INTEGER" property="adminLevel" />
+		<result column="lastLanguageUsed" jdbcType="INTEGER" property="lastLanguageUsed" />
+	</resultMap>
+	<select id="getByUsername" parameterType="String" resultMap="UserMapper">select * from users where username = #{value}</select>
+	<select id="getByEmail" parameterType="String" resultMap="UserMapper">select * from users where email = #{value}</select>
+	<insert id="insert" parameterType="net.k3rnel.arena.server.database.User">
+        INSERT INTO misc (name,value) VALUES (#{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR})
+	</insert>
+	<update id="release" parameterType="String">	
+		update users set lastLoginServer = '' where lastLoginServer=#{value}
+	</update>
+	<update id="changePassword" parameterType="net.k3rnel.arena.server.database.User">	
+		update users set password = #{password,jdbcType=VARCHAR} where username = #{username,jdbcType=VARCHAR}
+	</update>
+	<update id="updateMuted" parameterType="net.k3rnel.arena.server.database.User">	
+		update users set muteban = #{muteban,jdbcType=INTEGER} where username = #{username,jdbcType=VARCHAR}
+	</update>
+</mapper>
