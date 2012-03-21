@@ -86,6 +86,9 @@ public class GameServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else{
+		    System.out.println("Settings not found.");
+		    getConsoleSettings();
 		}
 	}
 
@@ -244,7 +247,6 @@ public class GameServer {
 		options.addOption("h", "help", false, "Shows this menu.");
 
 		if(args.length > 0) {
-
 			CommandLineParser parser = new GnuParser();
 			try {
 				// parse the command line arguments
