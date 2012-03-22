@@ -19,6 +19,7 @@
 package net.k3rnel.arena.server;
 
 import net.k3rnel.arena.server.database.DatabaseManager;
+import net.k3rnel.arena.server.feature.TimeService;
 import net.k3rnel.arena.server.network.IdleTimer;
 import net.k3rnel.arena.server.network.NetworkService;
 
@@ -32,6 +33,7 @@ public class ServiceManager {
 	private NetworkService m_networkService;
 	private IdleTimer m_idleTimer;
 	private DatabaseManager m_database;
+	private TimeService m_timeService;
 	
 	/**
 	 * Default constructor
@@ -43,6 +45,7 @@ public class ServiceManager {
 		m_networkService = new NetworkService();
 		m_idleTimer = new IdleTimer();
 		m_database = new DatabaseManager();
+		m_timeService = new TimeService();
 	}
 	
 	/**
@@ -54,6 +57,14 @@ public class ServiceManager {
 	}
 
 	/**
+	* Returns the time service
+	* @return
+	*/
+	public TimeService getTimeService() {
+	    return m_timeService;
+	}
+	
+	/**
 	 * Starts all services
 	 */
 	public void start() {
@@ -64,6 +75,7 @@ public class ServiceManager {
 		m_database.start();
 		m_networkService.start();
 		m_idleTimer.start();
+		m_timeService.start();
 		System.out.println("INFO: Service Manager startup completed.");
 	}
 	

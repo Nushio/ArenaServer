@@ -57,6 +57,7 @@ public class NetworkProtocols {
 		public int language;
 		public boolean force;
 		/**
+		 * State 0 is Successful login. Awesome. 
 		 * State 1 is Error, Player Limit Reached.<br>
 		 * State 2 is Error, Database is AFK.<br>
 		 * State 3 is Error, Username or Password Wrong.<br>

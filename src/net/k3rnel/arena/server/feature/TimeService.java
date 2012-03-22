@@ -63,15 +63,15 @@ public class TimeService implements Runnable {
 //			in.close();
 			Calendar cal = Calendar.getInstance();
 			m_hour = cal.get(Calendar.HOUR_OF_DAY);
-			m_minutes = 0;
-			m_day = 0;
+			m_minutes = cal.get(Calendar.MINUTE);
+			m_day = cal.get(Calendar.DAY_OF_WEEK);
 		} catch (Exception e) {
 			System.out.println("ERROR: Cannot reach time server, reverting to local time");
 			/* Can't reach website, base time on local */
 			Calendar cal = Calendar.getInstance();
 			m_hour = cal.get(Calendar.HOUR_OF_DAY);
-			m_minutes = 0;
-			m_day = 0;
+			m_minutes = cal.get(Calendar.MINUTE);
+            m_day = cal.get(Calendar.DAY_OF_WEEK);
 		}
 		while(m_isRunning) {
 			//Update the time. Time moves 4 times faster.

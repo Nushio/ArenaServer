@@ -26,7 +26,7 @@
 		<result column="username" jdbcType="VARCHAR" property="username" />
 		<result column="password" jdbcType="VARCHAR" property="password" />
 		<result column="email" jdbcType="VARCHAR" property="email" />
-		<result column="lastLoginTime" jdbcType="LONG" property="lastLoginTime" />
+		<result column="lastLoginTime" jdbcType="BIGINT" property="lastLoginTime" />
 		<result column="lastLoginServer" jdbcType="VARCHAR" property="lastLoginServer" />
 		<result column="lastLoginIP" jdbcType="VARCHAR" property="lastLoginIP" />
 		<result column="muteban" jdbcType="INTEGER" property="muteban" />
@@ -36,7 +36,7 @@
 	<select id="getByUsername" parameterType="String" resultMap="UserMapper">select * from users where username = #{value}</select>
 	<select id="getByEmail" parameterType="String" resultMap="UserMapper">select * from users where email = #{value}</select>
 	<insert id="insert" parameterType="net.k3rnel.arena.server.database.User">
-        INSERT INTO misc (name,value) VALUES (#{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR})
+		INSERT INTO users (username, password, email) VALUE (#{username},#{password},#{email})
 	</insert>
 	<update id="release" parameterType="String">	
 		update users set lastLoginServer = '' where lastLoginServer=#{value}
@@ -46,5 +46,14 @@
 	</update>
 	<update id="updateMuted" parameterType="net.k3rnel.arena.server.database.User">	
 		update users set muteban = #{muteban,jdbcType=INTEGER} where username = #{username,jdbcType=VARCHAR}
+	</update>
+	<update id="updateLastLogin" parameterType="net.k3rnel.arena.server.database.User">
+		update users SET 
+			lastLoginServer=#{lastLoginServer,jdbcType=VARCHAR},
+			lastLoginTime=#{lastLoginTime,jdbcType=BIGINT},
+			lastLoginIP=#{lastLoginIP,jdbcType=VARCHAR},
+       	    lastLanguageUsed=#{lastLanguageUsed,jdbcType=INTEGER}
+       	    WHERE username=#{username,jdbcType=VARCHAR}
+       
 	</update>
 </mapper>

@@ -24,7 +24,7 @@
 	<insert id="create_table_users">
 		CREATE TABLE `users` ( `id` int(11) NOT NULL AUTO_INCREMENT,
            `username` varchar(12) DEFAULT NULL, `password` varchar(255) DEFAULT NULL,
-		   `email` varchar(54) DEFAULT NULL, `lastLoginTime` datetime DEFAULT NULL,
+		   `email` varchar(54) DEFAULT NULL, `lastLoginTime` bigint DEFAULT NULL,
            `lastLoginServer` varchar(32) DEFAULT NULL, `lastLoginIP` varchar(32) DEFAULT NULL,
            `muteban` tinyint(1) DEFAULT '0', `adminLevel` tinyint(1) DEFAULT '0',
            `lastLanguageUsed` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (`id`),

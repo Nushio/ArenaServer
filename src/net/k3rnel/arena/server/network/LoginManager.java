@@ -30,6 +30,7 @@ import net.k3rnel.arena.server.backend.entity.PlayerChar.Language;
 import net.k3rnel.arena.server.database.DataConnection;
 import net.k3rnel.arena.server.database.User;
 import net.k3rnel.arena.server.database.UserManager;
+import net.k3rnel.arena.server.feature.TimeService;
 import net.k3rnel.arena.server.network.NetworkProtocols.LoginData;
 import net.k3rnel.arena.server.network.NetworkProtocols.PasswordChangeData;
 
@@ -78,7 +79,7 @@ public class LoginManager implements Runnable {
                 return;
             }
             //Check if there's database connection
-            if(session!=null) {
+            if(session==null) {
                 LoginData lo = new LoginData();
                 lo.state = 2; //State 2 is Error, Database is AFK. 
                 conn.sendTCP(lo);
@@ -291,7 +292,10 @@ public class LoginManager implements Runnable {
      */
     private void initialiseClient(PlayerChar p, Connection conn) {
         LoginData lo = new LoginData();
-        lo.state = 0; //State 0 is Succesfull login. Awesome. 
+        lo.state = 0; //State 0 is Successful login. Awesome. 
+        System.out.println("Time: "+TimeService.getTime());
+        lo.hours = TimeService.getHourOfDay();
+        lo.minutes = TimeService.getMinuteOfDay();
         conn.sendTCP(lo);
 
     }
