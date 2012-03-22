@@ -109,4 +109,9 @@ public class UserManager {
         uMapper.updateMuted(user);
     }
 
+    public void updateLastLogin(User user) {
+        UserMapper uMapper = session.getMapper(UserMapper.class);
+        uMapper.updateLastLogin(user);
+    }
+
 }

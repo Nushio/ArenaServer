@@ -18,6 +18,7 @@
  */
 package net.k3rnel.arena.server.network;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -246,7 +247,7 @@ public class LoginManager implements Runnable {
      * @param session
      * @param result
      */
-    private void login(String username, String language, Connection conn, User user) {
+    private void login(String username, int language, Connection conn, User user) {
         //They are not logged in elsewhere, set the current login to the current server
         long time = System.currentTimeMillis();
         /*
@@ -255,8 +256,22 @@ public class LoginManager implements Runnable {
         PlayerChar p = getPlayerObject(user);
         p.setLastLoginTime(time);
         p.setTcpSession(conn);
-        p.setLanguage(Language.values()[Integer.parseInt(String.valueOf(language))]);
+        p.setLanguage(Language.values()[language]);
         conn.setName(username);
+        /*
+         * Update the database with login information
+         */
+        SqlSession session = DataConnection.openSession();
+        try{
+            user.setLastLanguageUsed(language);
+            user.setLastLoginIP(conn.getRemoteAddressTCP().getAddress().getHostAddress());
+            user.setLastLoginServer(GameServer.getServerName());
+            user.setLastLoginTime(new Date().getTime());
+            new UserManager(session).updateLastLogin(user);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not update login info!");
+        }finally{session.close();}
         /*
          * Send success packet to player, set their map and add them to a movement service
          */

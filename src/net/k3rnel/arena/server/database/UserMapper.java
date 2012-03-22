@@ -41,4 +41,6 @@ public interface UserMapper {
 
     void updateMuted(User user);
 
+    void updateLastLogin(User user);
+
 }

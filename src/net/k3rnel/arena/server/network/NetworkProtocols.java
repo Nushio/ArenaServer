@@ -54,7 +54,7 @@ public class NetworkProtocols {
 	static public class LoginData {
 		public String username;
 		public String password;
-		public String language;
+		public int language;
 		public boolean force;
 		/**
 		 * State 1 is Error, Player Limit Reached.<br>
@@ -63,6 +63,8 @@ public class NetworkProtocols {
 		 * State 99 is Error, F.U.B.A.R. Check Logs.<br>
 		 */
 		public int state;
+		public int hours;
+        public int minutes;
 	}
 	
 	static public class RegistrationData {

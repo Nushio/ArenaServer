@@ -47,4 +47,13 @@
 	<update id="updateMuted" parameterType="net.k3rnel.arena.server.database.User">	
 		update users set muteban = #{muteban,jdbcType=INTEGER} where username = #{username,jdbcType=VARCHAR}
 	</update>
+	<update id="updateLastLogin" parameterType="net.k3rnel.arena.server.database.User">
+		update users SET 
+			lastLoginServer=#{lastLoginServer,jdbcType=VARCHAR},
+			lastLoginTime=#{lastLoginTime,jdbcType=BIGINT},
+			lastLoginIP=#{lastLoginIP,jdbcType=VARCHAR},
+       	    lastLanguageUsed=#{lastLanguageUsed,jdbcType=INTEGER},
+       	    WHERE username=#{username,jdbcType=VARCHAR});
+       
+	</update>
 </mapper>
