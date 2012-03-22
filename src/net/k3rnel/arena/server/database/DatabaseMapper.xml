@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ *  Copyright (C) 2012 K3RNEL Developer Team
+ *  
+ *  This file is part of Distro Wars (Server).
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+  -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.k3rnel.arena.server.database.DatabaseMapper">
+	<insert id="create_table_users">
+		CREATE TABLE `users` ( `id` int(11) NOT NULL AUTO_INCREMENT,
+           `username` varchar(12) DEFAULT NULL, `password` varchar(255) DEFAULT NULL,
+		   `email` varchar(54) DEFAULT NULL, `lastLoginTime` datetime DEFAULT NULL,
+           `lastLoginServer` varchar(32) DEFAULT NULL, `lastLoginIP` varchar(32) DEFAULT NULL,
+           `muteban` tinyint(1) DEFAULT '0', `adminLevel` tinyint(1) DEFAULT '0',
+           `lastLanguageUsed` tinyint(1) NOT NULL DEFAULT '0', PRIMARY KEY (`id`),
+           UNIQUE KEY `uniq_username` (`username`), UNIQUE KEY `uniq_email` (`email`),
+           KEY `username` (`username`), KEY `id` (`id`) USING BTREE ) ENGINE=MyISAM 
+           AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+	</insert>
+	<insert id="create_table_misc">	
+		CREATE  TABLE `misc` (`name` VARCHAR(20) NOT NULL ,`value` VARCHAR(45) NULL ,
+	       PRIMARY KEY (`name`) , UNIQUE INDEX `uq_name` (`name` ASC) ,
+           INDEX `in_name` (`name` ASC) ) ENGINE = MyISAM
+	</insert>
+</mapper>

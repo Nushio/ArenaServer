@@ -49,6 +49,7 @@
 
 	<!-- Identify all SQL Map XML files to be loaded by this SQL map.… -->
 	<mappers>
+		<mapper resource="net/k3rnel/arena/server/database/DatabaseMapper.xml" />
 		<mapper resource="net/k3rnel/arena/server/database/MiscMapper.xml" />
 		<mapper resource="net/k3rnel/arena/server/database/UserMapper.xml" />
 		<mapper resource="net/k3rnel/arena/server/utils/UtilsMapper.xml" />

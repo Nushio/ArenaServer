@@ -31,7 +31,6 @@ import net.k3rnel.arena.server.GameServer;
  */
 public class DatabaseManager {
     private final static int DATABASE_VERSION = 1;
-    private final static String SCHEMA = GameServer.getDatabaseName();
 
     public void start(){
 
@@ -39,17 +38,16 @@ public class DatabaseManager {
         SqlSession session = DataConnection.openSession();
         try{
             if(session!=null){
-                if (DATABASE_VERSION > getDbVersion()){
+                int dbVersion = getDbVersion();
+                if (DATABASE_VERSION > dbVersion){
                     //OOh, Shiny!
-                    onUpgrade(getDbVersion());
-                }else{
-                    //Create all tables!
-                    onCreate();
+                    onUpgrade(dbVersion);
                 }
             }else{
                 System.out.println("Could not connect to database.");
             }
         }catch(Exception e){
+            e.printStackTrace();
             System.out.println("Could not connect to database.");
         }finally{session.close();}
 
@@ -62,35 +60,11 @@ public class DatabaseManager {
     public void onCreate() {
         SqlSession session = DataConnection.openSession();
         try {
-            session.insert("CREATE SCHEMA `"+SCHEMA+"` DEFAULT CHARACTER SET latin1;");
-            
-            session.insert("CREATE TABLE `"+SCHEMA+"`.`users` ("+
-                    "`id` int(11) NOT NULL AUTO_INCREMENT,"+
-                    "`username` varchar(12) DEFAULT NULL,"+
-                    "`password` varchar(255) DEFAULT NULL,"+
-                    "`email` varchar(54) DEFAULT NULL,"+
-                    "`lastLoginTime` datetime DEFAULT NULL,"+
-                    "`lastLoginServer` varchar(32) DEFAULT NULL,"+
-                    "`lastLoginIP` varchar(32) DEFAULT NULL,"+
-                    "`muteban` tinyint(1) DEFAULT '0',"+
-                    "`adminLevel` tinyint(1) DEFAULT '0',"+
-                    "`lastLanguageUsed` tinyint(1) NOT NULL DEFAULT '0',"+
-                    "PRIMARY KEY (`id`),"+
-                    "UNIQUE KEY `uniq_username` (`username`),"+
-                    "UNIQUE KEY `uniq_email` (`email`),"+
-                    "KEY `username` (`username`),"+
-                    "KEY `id` (`id`) USING BTREE"+
-                    ") ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8");
-            
-            session.insert("CREATE  TABLE `"+SCHEMA+"`.`misc` (" +
-                    "`name` VARCHAR(20) NOT NULL ," +
-                    "`value` VARCHAR(45) NULL ," +
-                    " PRIMARY KEY (`name`) ," +
-                    " UNIQUE INDEX `uq_name` (`name` ASC) ," +
-                    "  INDEX `in_name` (`name` ASC) )" +
-                    "ENGINE = MyISAM;");
+            System.out.println("Warning... Schema "+GameServer.getDatabaseName()+" must already be created!");
+            DatabaseMapper dMapper = session.getMapper(DatabaseMapper.class);
+            dMapper.create_table_users();
+            dMapper.create_table_misc();
             new MiscManager(session).insert(new Misc("version", DATABASE_VERSION));
-            
             session.commit();
         } catch (SQLException e) {
             System.out.println("Failed to create the database");
@@ -110,6 +84,10 @@ public class DatabaseManager {
         while(version < DATABASE_VERSION){
             version++;
             switch(version){
+                case 1:{
+                    onCreate();
+                    break;
+                }
                 case 2:{
                     System.out.println("Upgrading to version 2");
                     setDbVersion(2);

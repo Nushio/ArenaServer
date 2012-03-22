@@ -46,6 +46,7 @@ public class DataConnection {
             Reader reader = Resources.getResourceAsReader("MySQLConfig.xml");
             factory = new SqlSessionFactoryBuilder().build(reader,properties);
         } catch (Exception e){
+            e.printStackTrace();
             throw new RuntimeException("Fatal Error.  Cause: " + e, e);
         }
     }

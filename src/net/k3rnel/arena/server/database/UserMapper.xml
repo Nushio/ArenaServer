@@ -26,7 +26,7 @@
 		<result column="username" jdbcType="VARCHAR" property="username" />
 		<result column="password" jdbcType="VARCHAR" property="password" />
 		<result column="email" jdbcType="VARCHAR" property="email" />
-		<result column="lastLoginTime" jdbcType="LONG" property="lastLoginTime" />
+		<result column="lastLoginTime" jdbcType="BIGINT" property="lastLoginTime" />
 		<result column="lastLoginServer" jdbcType="VARCHAR" property="lastLoginServer" />
 		<result column="lastLoginIP" jdbcType="VARCHAR" property="lastLoginIP" />
 		<result column="muteban" jdbcType="INTEGER" property="muteban" />
