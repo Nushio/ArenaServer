@@ -21,6 +21,7 @@ package net.k3rnel.arena.server.backend.entity;
 /**
  * Represents an item.
  * @author HeikaHaku
+ * @author Nushio
  *
  */
 public class Item {
@@ -30,10 +31,10 @@ public class Item {
 	 */
 	public enum Type { ITEM, WEAPON, ARMOR, MONEY }
 	//id, name, description, maxquantity (int), tradeable (boolean)
-	private Type m_type;
-	private String m_name;
 	private int m_id;
+	private String m_name;
 	private String m_desc;
+	private Type m_type;
 	private int m_max;
 	private boolean m_trade;
 	
@@ -139,5 +140,19 @@ public class Item {
 	public boolean getTradeable() {
 		return m_trade;
 	}
+
+    /**
+     * @return Represents the Item ID
+     */
+    public int getId() {
+        return m_id;
+    }
+
+    /**
+     * @param id Sets the Item ID
+     */
+    public void setId(int id) {
+        this.m_id = id;
+    }
 	
 }

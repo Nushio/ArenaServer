@@ -30,7 +30,7 @@ import net.k3rnel.arena.server.GameServer;
  * @author Nushio
  */
 public class DatabaseManager {
-    private final static int DATABASE_VERSION = 1;
+    private final static int DATABASE_VERSION = 2;
 
     public void start(){
 
@@ -90,6 +90,18 @@ public class DatabaseManager {
                 }
                 case 2:{
                     System.out.println("Upgrading to version 2");
+                    SqlSession session = DataConnection.openSession();
+                    try{
+                        DatabaseMapper dMapper = session.getMapper(DatabaseMapper.class);
+                        dMapper.create_table_items();
+                        dMapper.create_table_bag();
+                        session.commit();
+                    }catch(Exception e){
+                        System.out.println("Failed to upgrade to version 2!");
+                        System.out.println(e.getMessage());
+                    }finally{
+                        session.close();
+                    }
                     setDbVersion(2);
                     break;
                 }

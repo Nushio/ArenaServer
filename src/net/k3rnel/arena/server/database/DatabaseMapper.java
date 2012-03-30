@@ -32,5 +32,9 @@ public interface DatabaseMapper {
     void create_table_users();
 
     void create_table_misc();
+    
+    void create_table_items();
+    
+    void create_table_bag();
 
 }
