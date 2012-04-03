@@ -82,6 +82,12 @@ public class GameServer {
 				m_dbUsername = s.nextLine();
 				m_serverName = s.nextLine();
 				m_dbPassword = s.nextLine();
+				if(m_dbPassword.isEmpty()||m_dbPassword.equals(" ")){
+				    ConsoleReader r = new ConsoleReader();
+			        System.out.println("Please enter the required information.");
+			        System.out.println("Database Password: ");
+			        m_dbPassword = r.readToken();
+				}
 				s.close();
 			} catch (Exception e) {
 				e.printStackTrace();
