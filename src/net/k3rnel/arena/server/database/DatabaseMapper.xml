@@ -37,4 +37,14 @@
 	       PRIMARY KEY (`name`) , UNIQUE INDEX `uq_name` (`name` ASC) ,
            INDEX `in_name` (`name` ASC) ) ENGINE = MyISAM
 	</insert>
+	<insert id="create_table_items">
+		CREATE  TABLE `k3rnel`.`items` (`id` INT NOT NULL ,  `name` VARCHAR(25) NULL ,
+  			`description` VARCHAR(255) NULL , `type` INT NULL , `max` INT NULL , `trade` TINYINT(1) NULL ,
+  		   PRIMARY KEY (`id`), UNIQUE INDEX `IT_name` (`name` ASC) , 
+  		    INDEX `in_name` (`name` ASC) ) ENGINE = MyISAM
+	</insert>
+	<insert id="create_table_bag">
+		CREATE  TABLE `k3rnel`.`bag` (`item` INT NOT NULL ,	`player` INT NOT NULL , `quantity` INT NOT NULL ,
+			UNIQUE INDEX `item_UNIQUE` (`item` ASC) ,UNIQUE INDEX `player_UNIQUE` (`player` ASC) );
+	</insert>
 </mapper>
